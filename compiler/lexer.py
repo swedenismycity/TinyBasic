@@ -1,4 +1,5 @@
 from compiler.notToken import *
+import sys
 class Lexer:
     def __init__(self, input):
         #self.tokens = []
@@ -91,6 +92,7 @@ class Lexer:
             if self.peek() == '.': #FLOAT??????
                 self.step()
                 if not self.peek().isdigit():
+                    print("error?")
                     self.abort("Letter found in Number dumbass!")
                 while self.curChar.isdigit():
                     self.step()

@@ -25,5 +25,26 @@ class testLexer(unittest.TestCase):
         awnser =  [TokenType.PRINT, TokenType.IDENT, TokenType.NEWLINE]
         self.assertEqual(enums_list, awnser)
 
+    def testFloats(self):
+        lexer = Lexer('1.string')
+        tokens = lexer.getTokens()
+        enums_list = [token.type for token in tokens]
+        awnser =  []
+        self.assertEqual(enums_list, awnser)
+
+    def testIntegers(self):
+        lexer = Lexer('1string')
+        tokens = lexer.getTokens()
+        enums_list = [token.type for token in tokens]
+        awnser =  []
+        self.assertEqual(enums_list, awnser)
+
+    def testIDENT(self):
+        lexer = Lexer('string123')
+        tokens = lexer.getTokens()
+        enums_list = [token.type for token in tokens]
+        awnser =  [TokenType.IDENT, TokenType.NEWLINE]
+        self.assertEqual(enums_list, awnser)
+
 
 unittest.main()
