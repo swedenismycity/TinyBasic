@@ -90,7 +90,7 @@ class Parser: #Like a lexer but for Tokens!
             while not self.checkToken(TokenType.ENDIF):
                 self.parseNEWLINE()
                 if self.checkToken(TokenType.EOF):
-                    assert False, f"Expected {TokenType.ENDIF}, got {self.curTok}"
+                    self.abort("Missing ENDIF for IF-statement.")
                 self.parseStatement()
             self.emitter.emitLine("}")
             print("ENDIF")
@@ -107,7 +107,7 @@ class Parser: #Like a lexer but for Tokens!
             while not self.checkToken(TokenType.ENDWHILE):
                 self.parseNEWLINE()
                 if self.checkToken(TokenType.EOF):
-                    assert False, f"Expected {TokenType.ENDWHILE}, got {self.curTok}"
+                    self.abort("Missing ENDWHILE for WHILE-loop.")
                 self.parseStatement()
             self.emitter.emitLine("}")
             print("ENDWHILE")
