@@ -6,6 +6,25 @@ class TokenType(Enum):
     NUMBER = 1 ##
     IDENT = 2 ##
     STRING = 3 ##
+    #---------------Operators---------------#
+    EQ = 4
+    PLUS = 5
+    PLUSEQ = 6
+    MINUS = 7
+    MINUSEQ = 8
+    ASTERISK = 9
+    ASTERISKEQ = 10
+    SLASH = 11
+    SLASHEQ = 12 
+        #not done!
+    LSHIFT = 13
+    RSHIFT = 14
+    NOT = 15
+    AND = 16
+    OR = 17
+    XOR = 18
+    MOD = 19
+        #not done!
     #---------------Key Words---------------# 
         #RANGE FROM 100 to 200
     IF = 100
@@ -25,25 +44,6 @@ class TokenType(Enum):
     GOTO = 114
     LET = 115
     INPUT = 116
-    #---------------Operators---------------#
-    EQ = 44
-    PLUS = 15
-    PLUSEQ = 200
-    MINUS = 16
-    MINUSEQ = 201
-    ASTERISK = 17
-    ASTERISKEQ = 50
-    SLASH = 18
-    SLASHEQ = 51
-        #not done!
-    LSHIFT = 24
-    RSHIFT = 25
-    NOT = 26
-    AND = 27
-    OR = 28
-    XOR = 29
-    MOD = 30
-        #not done!
     #----------COMPARE------------#
         #RANGE FROM 200 TO 300
     EQEQ = 201
