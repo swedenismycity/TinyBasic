@@ -1,4 +1,3 @@
-from compiler.lexer import * 
 from enum import Enum
 class TokenType(Enum):
     EOF = -1

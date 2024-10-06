@@ -1,7 +1,7 @@
-from compiler.lexer import Lexer
-from compiler.notToken import *
-from compiler.parser import Parser
-from compiler.emitter import Emitter
+from tinybasic.lexer import Lexer
+from tinybasic.notToken import *
+from tinybasic.parser import Parser
+from tinybasic.emitter import Emitter
 
 source = open('basicFile.txt', 'r').read()
 

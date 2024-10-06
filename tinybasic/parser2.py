@@ -1,9 +1,10 @@
-from tinybasic.lexer import Lexer
-from tinybasic.notToken import * 
+#from lexer import Lexer
+from notToken import * 
+from node import *
 import sys
 class Parser: #Like a lexer but for Tokens! 
     def __init__(self, lexer, emitter):
-        self.tokens = lexer.getTokens()
+        self.tokens = None #lexer.getTokens()
         self.emitter = emitter
         self.curPos = 0
         self.curTok = self.tokens[0]

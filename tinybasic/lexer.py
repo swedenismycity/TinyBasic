@@ -1,4 +1,4 @@
-from compiler.notToken import *
+from tinybasic.notToken import *
 import sys
 class Lexer:
     def __init__(self, input):
