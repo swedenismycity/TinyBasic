@@ -38,13 +38,14 @@ class Parser: #Like a lexer but for Tokens!
         return self.tokens[self.curPos + 1].type == type
     
     def abort(self, message):
-        sys.exit("Error. " + message)
+        import unittest
+        raise ValueError("Parsing error. " + message)
+        #sys.exit("Error. " + message)
     
     def match(self, type):
         if not self.checkToken(type):
             self.abort(f"Expected {type}, got {self.curTok}")
         self.step()
-
         
     def parseProgram(self):
         print("PROGRAM")
