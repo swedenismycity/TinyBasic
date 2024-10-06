@@ -87,15 +87,18 @@ class Lexer:
             token = Token('\n', TokenType.NEWLINE)
         elif self.curChar == '\0':
             token = Token('\0', TokenType.EOF)
+
         #-----------------TYPE-----------------#
+       
         elif self.curChar.isdigit():
             start = self.curPos
             while self.curChar.isdigit():
                 self.step()
+                if self.curChar.isalpha():
+                    self.abort("Letter found in Number dumbass!")
             if self.curChar == '.': #FLOAT??????
                 self.step()
                 if not self.curChar.isdigit():
-                    print("error?")
                     self.abort("Letter found in Number dumbass!")
                 while self.curChar.isdigit():
                     self.step()
@@ -105,9 +108,9 @@ class Lexer:
             
         elif self.curChar.isalpha():
             start = self.curPos
-            while self.curChar.isalnum():
+            while self.peek().isalnum():
                 self.step()
-            end  = self.curPos 
+            end  = self.curPos + 1
             value = self.string[start:end]
             keyWord = Token.isKeyword(value)
             token = (Token(value, keyWord) if keyWord 
