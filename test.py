@@ -110,16 +110,6 @@ class testLexer(unittest.TestCase):
         expected = [TokenType.IDENT, TokenType.IDENT, TokenType.IDENT, TokenType.NEWLINE]
         self.assertEqual(enums_list, expected, "var1 var2 var3")
 
-    def testStringWithEscapedQuotes(self): #TODO 
-        """
-        input = '"string with \\"escaped\\" quotes"'
-        lexer = Lexer(input)
-        tokens = lexer.getTokens()
-        enums_list = [token.type for token in tokens]
-        expected = [TokenType.STRING, TokenType.NEWLINE]
-        self.assertEqual(enums_list, expected, input)
-        self.assertEqual(tokens[0].value, input, input)
-        """
 
     def testMultipleLines(self):
         lexer = Lexer('var1\nvar2')
@@ -142,14 +132,6 @@ class testLexer(unittest.TestCase):
         expected = [TokenType.IDENT, TokenType.EQ, TokenType.NUMBER, TokenType.NEWLINE]
         self.assertEqual(enums_list, expected, "var1 = 100")
 
-    def testCommentIgnored(self): #TODO 
-        """
-        lexer = Lexer('var1 = 100 #this is a comment')
-        tokens = lexer.getTokens()
-        enums_list = [token.type for token in tokens]
-        expected = [TokenType.IDENT, TokenType.EQ, TokenType.NUMBER, TokenType.NEWLINE]
-        self.assertEqual(enums_list, expected, "Lexer should ignore comments after the '//' symbol")
-        """
     
     def testMultipleSpaces(self):
         lexer = Lexer('var1    =   100')
@@ -183,6 +165,38 @@ class testLexer(unittest.TestCase):
         ]
         self.assertEqual(enums_list, expected, "== != < > <= >=")
 
+    def testUnterminatedString(self):
+        lexer = Lexer('"unterminated string')
+        self.assertRaises(ValueError, lexer.getTokens)
+
+
+    def testMultilineString(self):
+        lexer = Lexer('"This is a string \n that spans multiple lines"')
+        tokens = lexer.getTokens()
+        enums_list = [token.type for token in tokens]
+        expected = [TokenType.STRING, TokenType.NEWLINE]
+        self.assertEqual(enums_list, expected, "This is a string \n that spans multiple lines")
+
+    def testStringWithEscapeCharacters(self):
+        lexer = Lexer('"This is a string with a newline\\n and a tab\\t"')
+        tokens = lexer.getTokens()
+        enums_list = [token.type for token in tokens]
+        expected = [TokenType.STRING, TokenType.NEWLINE]
+        self.assertEqual(enums_list, expected, '"This is a string with a newline\\n and a tab\\t"')
+
+    def testInvalidNumberFormat(self):
+        lexer = Lexer('123.456.789')
+        self.assertRaises(ValueError, lexer.getTokens)
+
+    def testCommentIgnored(self): #TODO 
+        """
+        lexer = Lexer('var1 = 100 #this is a comment')
+        tokens = lexer.getTokens()
+        enums_list = [token.type for token in tokens]
+        expected = [TokenType.IDENT, TokenType.EQ, TokenType.NUMBER, TokenType.NEWLINE]
+        self.assertEqual(enums_list, expected, "var1 = 100 #this is a comment")
+        """
+
     def testLogicalOperators(self):#TODO
         """
         lexer = Lexer('&& || !')
@@ -191,7 +205,7 @@ class testLexer(unittest.TestCase):
         expected = [TokenType.AND, TokenType.OR, TokenType.NOT, TokenType.NEWLINE]
         self.assertEqual(enums_list, expected, "&& || !")
         """
-    
+
     def testComplexExpression(self):#TODO
         """
         lexer = Lexer('var1 = (10 + 20) * 5')
@@ -205,10 +219,6 @@ class testLexer(unittest.TestCase):
         self.assertEqual(enums_list, expected, "var1 = (10 + 20) * 5")
         """
 
-    def testUnterminatedString(self):
-        lexer = Lexer('"unterminated string')
-        self.assertRaises(ValueError, lexer.getTokens)
-
     def testHexadecimalNumber(self):#TODO
         """
         lexer = Lexer('0x1A3F')
@@ -218,16 +228,39 @@ class testLexer(unittest.TestCase):
         self.assertEqual(enums_list, expected, "0x1A3F")
         """
 
-    def testMultilineString(self):
-        lexer = Lexer('"This is a string \n that spans multiple lines"')
+    def testBooleanLiterals(self):#TODO
+        """
+        lexer = Lexer('true false')
+        tokens = lexer.getTokens()
+        enums_list = [token.type for token in tokens]
+        expected = [TokenType.TRUE, TokenType.FALSE, TokenType.NEWLINE]
+        self.assertEqual(enums_list, expected, 'true false')
+        """
+
+    def testNestedParentheses(self): #TODO
+        """
+        lexer = Lexer('((a + b) * c)')
+        tokens = lexer.getTokens()
+        enums_list = [token.type for token in tokens]
+        expected = [
+            TokenType.LEFT_PAREN, TokenType.LEFT_PAREN, TokenType.IDENT, 
+            TokenType.PLUS, TokenType.IDENT, TokenType.RIGHT_PAREN, 
+            TokenType.MULTIPLY, TokenType.IDENT, TokenType.RIGHT_PAREN, 
+            TokenType.NEWLINE
+        ]
+        self.assertEqual(enums_list, expected, '"((a + b) * c)"')
+        """
+
+    def testStringWithEscapedQuotes(self): #TODO 
+        """
+        input = '"string with \\"escaped\\" quotes"'
+        lexer = Lexer(input)
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
         expected = [TokenType.STRING, TokenType.NEWLINE]
-        self.assertEqual(enums_list, expected, "This is a string \n that spans multiple lines")
-
-    def testInvalidNumberFormat(self):#TODO
-        lexer = Lexer('123.456.789')
-        self.assertRaises(ValueError, lexer.getTokens)
+        self.assertEqual(enums_list, expected, input)
+        self.assertEqual(tokens[0].value, input, input)
+        """
 
 
 unittest.main()
