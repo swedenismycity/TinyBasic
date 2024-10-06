@@ -92,17 +92,19 @@ class Lexer:
        
         elif self.curChar.isdigit():
             start = self.curPos
-            while self.curChar.isdigit():
+            while self.peek().isdigit():
                 self.step()
-                if self.curChar.isalpha():
-                    self.abort("Letter found in Number dumbass!")
-            if self.curChar == '.': #FLOAT??????
+
+            if self.peek().isalpha():
+                self.abort("Letter found in Number dumbass!")
+
+            if self.peek() == '.': #FLOAT??????
                 self.step()
-                if not self.curChar.isdigit():
-                    self.abort("Letter found in Number dumbass!")
-                while self.curChar.isdigit():
+                while self.peek().isdigit():
                     self.step()
-            end = self.curPos
+                if self.peek().isalpha():
+                    self.abort("Letter found in Number dumbass!")
+            end = self.curPos + 1 
             value = self.string[start:end]
             token = Token(value, TokenType.NUMBER)
             
@@ -126,6 +128,9 @@ class Lexer:
             end = self.curPos 
             value = self.string[start:end]
             token = Token(value, TokenType.STRING)
+
+        else:
+            self.abort("Illegal Character")
             
         return token
 
