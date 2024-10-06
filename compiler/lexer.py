@@ -3,7 +3,7 @@ import sys
 class Lexer:
     def __init__(self, input):
         #self.tokens = []
-        self.string = input + '\n\n'
+        self.string = input + '\n'
         self.curChar = ''
         self.curPos = -1
         self.step()

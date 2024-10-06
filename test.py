@@ -9,20 +9,21 @@ class testLexer(unittest.TestCase):
         lexer = Lexer("")
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
-        self.assertEqual(enums_list, [TokenType.NEWLINE, TokenType.NEWLINE])
+        awnser = [TokenType.NEWLINE] 
+        self.assertEqual(enums_list, awnser)
 
     def testPrintString(self):
         lexer = Lexer('PRINT "hello world!"')
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
-        awnser = [TokenType.PRINT, TokenType.STRING, TokenType.NEWLINE, TokenType.NEWLINE] 
+        awnser = [TokenType.PRINT, TokenType.STRING, TokenType.NEWLINE]
         self.assertEqual(enums_list, awnser)
 
     def testPrintVariable(self):
         lexer = Lexer('PRINT variable')
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
-        awnser =  [TokenType.PRINT, TokenType.IDENT, TokenType.NEWLINE, TokenType.NEWLINE]
+        awnser =  [TokenType.PRINT, TokenType.IDENT, TokenType.NEWLINE]
         self.assertEqual(enums_list, awnser)
 
     def testFloats(self):
@@ -37,14 +38,14 @@ class testLexer(unittest.TestCase):
         lexer = Lexer('ident123')
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
-        awnser =  [TokenType.IDENT, TokenType.NEWLINE, TokenType.NEWLINE] #Why do STRINGS leave 2nl and IDENT 1nl?? 
+        awnser =  [TokenType.IDENT, TokenType.NEWLINE]
         self.assertEqual(enums_list, awnser, "Types must match")
 
     def testString(self):
         lexer = Lexer('"string123"')
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
-        awnser =  [TokenType.STRING, TokenType.NEWLINE,TokenType.NEWLINE] #Why do STRINGS leave 2nl and IDENT 1nl?? 
+        awnser =  [TokenType.STRING, TokenType.NEWLINE]
         self.assertEqual(enums_list, awnser, "Types must match")
         self.assertEqual(tokens[0].value, "string123", "Input must match Token.value")
 
@@ -52,36 +53,37 @@ class testLexer(unittest.TestCase):
         lexer = Lexer('!ident')
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
-        awnser =  [TokenType.NOT, TokenType.IDENT, TokenType.NEWLINE, TokenType.NEWLINE]
+        awnser =  [TokenType.NOT, TokenType.IDENT, TokenType.NEWLINE]
         self.assertEqual(enums_list, awnser)
 
     def testSpacing(self):
         lexer = Lexer('WHILEsdf')
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
-        awnser =  [TokenType.IDENT, TokenType.NEWLINE, TokenType.NEWLINE]
+        awnser =  [TokenType.IDENT, TokenType.NEWLINE]
         self.assertEqual(enums_list, awnser)
 
     def testKeyWord(self):
         lexer = Lexer('WHILE')
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
-        awnser =  [TokenType.WHILE, TokenType.NEWLINE, TokenType.NEWLINE]
+        awnser =  [TokenType.WHILE, TokenType.NEWLINE]
         self.assertEqual(enums_list, awnser)
 
     def testEQWithoutSpaces(self):
         lexer = Lexer('a=b')
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
-        awnser =  [TokenType.IDENT, TokenType.EQ, TokenType.IDENT, TokenType.NEWLINE, TokenType.NEWLINE]
+        awnser =  [TokenType.IDENT, TokenType.EQ, TokenType.IDENT, TokenType.NEWLINE]
         self.assertEqual(enums_list, awnser, "a=b")
         
     def testEQWithSpaces(self):
         lexer = Lexer('a = b')
         tokens = lexer.getTokens()
         enums_list = [token.type for token in tokens]
-        awnser =  [TokenType.IDENT, TokenType.EQ, TokenType.IDENT, TokenType.NEWLINE, TokenType.NEWLINE]
+        awnser =  [TokenType.IDENT, TokenType.EQ, TokenType.IDENT, TokenType.NEWLINE]
         self.assertEqual(enums_list, awnser, "a = b")
+
 
 
 unittest.main()
