@@ -22,12 +22,15 @@ class Lexer:
 
     def previous(self):
         pass
+
     def removeWhitespace(self):
         while self.curChar == ' ' or self.curChar == '\r' or self.curChar == '\t':
             self.step()
 
     def abort(self, message):
-        sys.exit("Lexing error. " + message)
+        import unittest
+        raise ValueError("Lexing error. " + message)
+        #sys.exit("Lexing error. " + message)
         
     def getToken(self):
         #--------------OPS---------------#
@@ -89,9 +92,9 @@ class Lexer:
             start = self.curPos
             while self.curChar.isdigit():
                 self.step()
-            if self.peek() == '.': #FLOAT??????
+            if self.curChar == '.': #FLOAT??????
                 self.step()
-                if not self.peek().isdigit():
+                if not self.curChar.isdigit():
                     print("error?")
                     self.abort("Letter found in Number dumbass!")
                 while self.curChar.isdigit():
